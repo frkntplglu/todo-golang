@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"strconv"
+
 	"ToDo/models"
 	"ToDo/services"
 	"github.com/gofiber/fiber/v2"
@@ -60,8 +62,12 @@ func (todo todoHandler) Edit(ctx *fiber.Ctx) error {
 }
 
 func (todo todoHandler) Delete(ctx *fiber.Ctx) error {
-	//TODO implement me
-	panic("implement me")
+	id, err := strconv.ParseUint(ctx.Params("id"), 10, 64)
+	if err != nil {
+		return ctx.Status(400).JSON(TodoResponse{Error: err.Error()})
+	}
+	todo.todoService.Delete(id)
+	return ctx.Status(200).JSON(TodoResponse{Data: "Deleted"})
 }
 
 var _ TodoHandler = todoHandler{}

@@ -9,7 +9,7 @@ type TodoService interface {
 	Get() ([]models.TodoModel, error)
 	Create(model models.TodoModel) (uint, error)
 	Edit(id uint) (models.TodoModel, error)
-	Delete(id uint)
+	Delete(id uint64)
 }
 
 type todoService struct {
@@ -35,7 +35,6 @@ func (todo todoService) Edit(id uint) (models.TodoModel, error) {
 	panic("implement me")
 }
 
-func (todo todoService) Delete(id uint) {
-	//TODO implement me
-	panic("implement me")
+func (todo todoService) Delete(id uint64) {
+	todo.serviceRepo.Delete(id)
 }

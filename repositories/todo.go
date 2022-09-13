@@ -9,7 +9,7 @@ type TodoRepository interface {
 	Get() ([]models.TodoModel, error)
 	Create(model models.TodoModel) (uint, error)
 	Edit(id uint) (models.TodoModel, error)
-	Delete(id uint)
+	Delete(id uint64)
 	Migration() error
 }
 type todoRepository struct {
@@ -43,9 +43,10 @@ func (todo todoRepository) Edit(id uint) (models.TodoModel, error) {
 	panic("implement me")
 }
 
-func (todo todoRepository) Delete(id uint) {
-	//TODO implement me
-	panic("implement me")
+func (todo todoRepository) Delete(id uint64) {
+	var todoModel models.TodoModel
+	todo.Db.Delete(&todoModel, id)
+
 }
 
 func (todo todoRepository) Migration() error {
