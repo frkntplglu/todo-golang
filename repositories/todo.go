@@ -40,7 +40,6 @@ func (todo todoRepository) Create(model models.TodoModel) (uint, error) {
 
 func (todo todoRepository) Edit(id uint64, newItem models.TodoModel) (models.TodoModel, error) {
 	var todoItem models.TodoModel
-	//todoItem = todo.Db.First(&todoItem, id)
 	todo.Db.Model(todoItem).Where("id = ?", id).Updates(newItem)
 	return todoItem, nil
 }
