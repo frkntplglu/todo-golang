@@ -28,6 +28,7 @@ func main() {
 	app.Get("/api/todo", todoHandler.Get)
 	app.Post("/api/todo", todoHandler.Create)
 	app.Delete("/api/todo/:id", todoHandler.Delete)
+	app.Put("/api/todo/:id", todoHandler.Edit)
 
 	err = app.Listen(":8000")
 	if err != nil {

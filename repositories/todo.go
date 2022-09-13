@@ -8,7 +8,7 @@ import (
 type TodoRepository interface {
 	Get() ([]models.TodoModel, error)
 	Create(model models.TodoModel) (uint, error)
-	Edit(id uint) (models.TodoModel, error)
+	Edit(id uint64, newItem models.TodoModel) (models.TodoModel, error)
 	Delete(id uint64)
 	Migration() error
 }
@@ -38,14 +38,16 @@ func (todo todoRepository) Create(model models.TodoModel) (uint, error) {
 	return model.ID, nil
 }
 
-func (todo todoRepository) Edit(id uint) (models.TodoModel, error) {
-	//TODO implement me
-	panic("implement me")
+func (todo todoRepository) Edit(id uint64, newItem models.TodoModel) (models.TodoModel, error) {
+	var todoItem models.TodoModel
+	//todoItem = todo.Db.First(&todoItem, id)
+	todo.Db.Model(todoItem).Where("id = ?", id).Updates(newItem)
+	return todoItem, nil
 }
 
 func (todo todoRepository) Delete(id uint64) {
-	var todoModel models.TodoModel
-	todo.Db.Delete(&todoModel, id)
+	var todoItem models.TodoModel
+	todo.Db.Delete(&todoItem, id)
 
 }
 

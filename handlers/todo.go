@@ -57,8 +57,20 @@ func (todo todoHandler) Create(ctx *fiber.Ctx) error {
 }
 
 func (todo todoHandler) Edit(ctx *fiber.Ctx) error {
-	//TODO implement me
-	panic("implement me")
+	id, err := strconv.ParseUint(ctx.Params("id"), 10, 64)
+	if err != nil {
+		return ctx.Status(400).JSON(TodoResponse{Error: err.Error()})
+	}
+	model := models.TodoModel{}
+	err = ctx.BodyParser(&model)
+	if err != nil {
+		return ctx.Status(400).JSON(TodoResponse{Error: err.Error()})
+	}
+	_, err = todo.todoService.Edit(id, model)
+	if err != nil {
+		return ctx.Status(400).JSON(TodoResponse{Error: err.Error()})
+	}
+	return ctx.Status(200).JSON(TodoResponse{Data: model})
 }
 
 func (todo todoHandler) Delete(ctx *fiber.Ctx) error {

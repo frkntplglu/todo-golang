@@ -8,7 +8,7 @@ import (
 type TodoService interface {
 	Get() ([]models.TodoModel, error)
 	Create(model models.TodoModel) (uint, error)
-	Edit(id uint) (models.TodoModel, error)
+	Edit(id uint64, newItem models.TodoModel) (models.TodoModel, error)
 	Delete(id uint64)
 }
 
@@ -30,9 +30,8 @@ func (todo todoService) Create(model models.TodoModel) (uint, error) {
 	return todo.serviceRepo.Create(model)
 }
 
-func (todo todoService) Edit(id uint) (models.TodoModel, error) {
-	//TODO implement me
-	panic("implement me")
+func (todo todoService) Edit(id uint64, newItem models.TodoModel) (models.TodoModel, error) {
+	return todo.serviceRepo.Edit(id, newItem)
 }
 
 func (todo todoService) Delete(id uint64) {
